@@ -1,0 +1,15 @@
+<block wx:if="{{completed}}">
+    <import src="../../libs/wxParse/wxParse.wxml"></import>
+    <view class="container">
+        <view class="zan-panel">
+            <view class="title">{{detail.title}}</view>
+            <view class="time">{{detail.createtime}}</view>
+            <view class="content">
+                <template is="wxParse" data="{{wxParseData:article.nodes}}"></template>
+            </view>
+        </view>
+    </view>
+</block>
+<view class="container-loading" wx:else>
+    <image mode="widthFix" src="{{loadingImg?loadingImg:'../../libs/images/loading.gif'}}"></image>
+</view>

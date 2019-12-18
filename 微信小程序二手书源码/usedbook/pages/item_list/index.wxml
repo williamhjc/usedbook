@@ -1,0 +1,36 @@
+<view class="container" wx:if="{{completed}}">
+    <scroll-view scrollX class="item-scroll" style="width: 100%" wx:if="{{list.length>0}}" wx:for="{{list}}" wx:key="key">
+        <view class="scroll-view-item_H list-item">
+            <navigator hoverClass="none" url="../detail/index?id={{action?item.item_id:item.id}}">
+                <view class="inline w20">
+                    <image class="item-img" src="{{item.cover?item.cover:'../../libs/images/holder.png'}}"></image>
+                </view>
+                <view class="inline w80">
+                    <view class="item-title clearfix">
+                        <view class="pull-left">{{item.title}}</view>
+                        <view class="pull-right">
+                            <text class="zan-c-red" wx:if="{{item.status==0}}">待审核</text>
+                            <text class="zan-c-red" wx:if="{{item.status==1&&item.item_top.status==0}}">待置顶</text>
+                            <text class="zan-c-red" wx:if="{{item.status==1&&item.item_top.status==-2}}">置顶过期</text>
+                            <text wx:if="{{item.status==1&&!item.item_top}}">已上架</text>
+                            <text class="zan-c-gray-darker" wx:if="{{item.status==2}}">已交易</text>
+                            <text class="text-orange" wx:if="{{item.status==1&&item.item_top.status==1}}">置顶中</text>
+                        </view>
+                    </view>
+                    <view class="zan-font-14 zan-c-gray-dark clearfix">
+                        <view class="pull-left">{{action?item.nickname:''}}发布于{{item.time_diff}}前</view>
+                        <view class="pull-right" wx:if="{{item.item_top}}">
+                            <view catchtap="checkLog" class="like-btn" data-id="{{item.id}}">置顶记录</view>
+                        </view>
+                    </view>
+                </view>
+            </navigator>
+        </view>
+        <view bindtap="deleteItem" class="scroll-hide delete-item" data-id="{{item.id}}" wx:if="{{type}}">删除</view>
+    </scroll-view>
+    <view class="no-data" wx:if="{{list.length==0}}">空空如也</view>
+</view>
+<view class="container-loading" wx:else>
+    <image mode="widthFix" src="{{loadingImg?loadingImg:'../../libs/images/loading.gif'}}"></image>
+</view>
+<zan-toast id="zan-toast"></zan-toast>

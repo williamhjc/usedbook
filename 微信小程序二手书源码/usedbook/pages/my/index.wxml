@@ -1,0 +1,103 @@
+<view class="container {{iphoneX?'big-padding':''}}" wx:if="{{completed}}">
+    <view class="my-panel">
+        <image class="avatar_wrap" mode="widthFix" src="../../libs/images/Shape.png"></image>
+        <view class="avatar">
+            <image class="my-avatar" src="{{my.avatar}}"></image>
+            <view class="member_wrap">{{my.nickname}}</view>
+            <view class="credit-box" wx:if="{{credit_on}}">
+               
+            </view>
+        </view>
+        <view class="nav_wrap">
+            <view class="nav-list">
+                <navigator url="../item_list/index?action=1">
+                    <view class="list-icon badge-container">
+                        <image src="../../libs/images/zan.png"></image>
+                        <zan-badge wx:if="{{my.zan>0}}">{{my.zan}}</zan-badge>
+                    </view>
+                    <view class="nav-text">点赞</view>
+                </navigator>
+            </view>
+            <view class="nav-list">
+                <navigator url="../item_list/index?action=2">
+                    <view class="list-icon badge-container">
+                        <image src="../../libs/images/collect.png"></image>
+                        <zan-badge wx:if="{{my.collect>0}}">{{my.collect}}</zan-badge>
+                    </view>
+                    <view class="nav-text">收藏</view>
+                </navigator>
+            </view>
+           
+        </view>
+    </view>
+    <view class="my-panel">
+         <zan-cell-group> 
+          
+            <zan-cell isLink="true" title="我发布的" url="../item_list/index?type=publish">
+                <image class="my-icon" slot="icon" src="../../libs/images/pub.gif"></image>
+            </zan-cell>
+            <zan-cell isLink="true" title="我卖出的" url="../my_order/index?type=sell">
+                <image class="my-icon" slot="icon" src="../../libs/images/sell.gif"></image>
+                <view class="sell-count" slot="footer" wx:if="{{my.sell_count>0}}">{{my.sell_count}}</view>
+            </zan-cell>
+            <zan-cell isLink="true" title="我买到的" url="../my_order/index?type=buy" wx:if="{{credit_on||wechat_on}}">
+                <image class="my-icon" slot="icon" src="../../libs/images/buy.gif"></image>
+            </zan-cell>
+           
+        </zan-cell-group>
+    </view>
+    <view class="my-panel" wx:if="{{my.wxapp}}" wx:for="{{my.wxapp}}" wx:key="key">
+        <view bindtap="linktoWxapp" class="wxapp-item" data-appid="{{item.appid}}" data-path="{{item.url}}">
+            <image class="wxapp-icon" src="{{item.img}}"></image>
+            <view class="wxapp-title">{{item.title}}</view>
+        </view>
+    </view>
+    <view class="version">版本号：{{version}}</view>
+    <view class="back-home" wx:if="{{my.service==1}}">
+        <button class="contact-btn" openType="contact">
+            <image src="{{my.service_img?my.service_img:'../../libs/images/service.png'}}"></image>
+        </button>
+    </view>
+</view>
+<view class="container-loading" wx:else>
+    <image mode="widthFix" src="{{loadingImg?loadingImg:'../../libs/images/loading.gif'}}"></image>
+</view>
+<zan-toast id="zan-toast"></zan-toast>
+<block wx:if="{{showLogin}}">
+    <view class="mask"></view>
+    <view class="modal">
+        <view class="modal-title">友情提示</view>
+        <view class="modal-content">
+            <view>您需要登录之后才能浏览此页面</view>
+            <view class="margin-small">点击确定按钮登录</view>
+        </view>
+        <view class="modal-footer">
+            <button bindtap="closeModal" class="modal-btn">取消</button>
+            <button bindgetuserinfo="getUserInfo" class="modal-btn confirm-btn" lang="zh_CN" openType="getUserInfo">确定</button>
+        </view>
+    </view>
+</block>
+<zan-popup bindclose="toggleCategoryPopup" show="{{showCategoryPopup}}" type="bottom">
+    <view class="item-pop">
+        <view catchtap="toggleCategoryPopup" class="pop-close">
+            <text class="iconfont icon-close"></text>
+        </view>
+        <view class="pop-panel">
+            <view class="cate-item" wx:for="{{category}}" wx:key="id">
+                <navigator hoverClass="none" url="/pages/list/index?id={{item.id}}">
+                    <image class="cate-img" src="{{item.cover}}"></image>
+                    <view class="zan-font-12">{{item.title}}</view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</zan-popup>
+<zan-popup bindclose="toggleBottomPopup" show="{{showBottomPopup}}" type="bottom">
+    <view class="item-pop">
+        <image mode="widthFix" src="{{my.uni_qrcode}}"></image>
+        <view class="bt-info">由于小程序不支持长按识别公众号二维码，请截屏保存到手机相册然后长按图片识别二维码关注公众号</view>
+    </view>
+</zan-popup>
+<import src="/we7/pages/templates/footer.wxml"></import>
+<template is="footerWx" data="{{...tabBar}}"></template>
+

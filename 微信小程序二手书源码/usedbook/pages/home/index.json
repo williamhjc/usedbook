@@ -1,0 +1,15 @@
+{
+    "navigationBarTitleText": "首页",
+    "enablePullDownRefresh": true,
+    "usingComponents": {
+        "zan-row": "../../libs/zanui/row/index",
+        "zan-col": "../../libs/zanui/col/index",
+        "zan-card": "../../libs/zanui/card/index",
+        "zan-icon": "../../libs/zanui/icon/index",
+        "zan-loading": "../../libs/zanui/loading/index",
+        "zan-tab": "../../libs/zanui/tab/index",
+        "zan-popup": "../../libs/zanui/popup/index",
+        "zan-toast": "../../libs/zanui/toast/index",
+        "movable": "../../libs/zanui/movable/movable"
+    }
+}

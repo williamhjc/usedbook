@@ -1,0 +1,31 @@
+<view class="container" wx:if="{{completed}}">
+    <view class="list-item" wx:if="{{list.length>0}}" wx:for="{{list}}" wx:key="key">
+        <navigator hoverClass="none" url="../detail/index?id={{item.itemid}}{{type=='sell'?'&myOrder=1':''}}'&orderid={{item.id}}">
+            <view class="inline">
+                <image class="item-img" src="{{item.cover?item.cover:'../../libs/images/holder.png'}}"></image>
+            </view>
+            <view class="inline w80">
+                <view class="item-title zan-ellipsis">{{item.title}}</view>
+                <view class="zan-font-14 zan-c-gray-dark zan-ellipsis">{{item.description}}</view>
+            </view>
+        </navigator>
+        <zan-cell title="{{type=='sell'?'赚了: ':'花费: '}}{{item.price>0?item.price+item.unit:item.credit+'积分'}}">
+            <button class="order-btn" disabled="true" slot="footer" wx:if="{{item.status==-1}}">已取消</button>
+            
+                <form bindsubmit="deleteOrder" data-id="{{item.id}}" reportSubmit="true">
+                    <button class="order-btn bg-red" formType="submit">删除订单</button>
+                </form>
+            
+        </zan-cell>
+    </view>
+    <view class="no-data" wx:if="{{list.length==0}}">空空如也</view>
+    <view class="back-home">
+        <navigator hoverClass="none" openType="redirect" url="../home/index">
+            <text class="iconfont icon-index"></text>
+        </navigator>
+    </view>
+</view>
+<view class="container-loading" wx:else>
+    <image mode="widthFix" src="{{loadingImg?loadingImg:'../../libs/images/loading.gif'}}"></image>
+</view>
+<zan-toptips content="{{content}}" id="zan-toptips"></zan-toptips>
